@@ -1,2 +1,3 @@
 # Pharmacy System
-This is my university assignment that I decided to experiment with and use Go with Echo framework as backend and Go Templates with HTMX on the frontend. For database I use postgresql.
+Pharmacy system whritten in Go with [Echo]("https://github.com/labstack/echo") framework as backend and Go Templates with [HTMX]("https://htmx.org/") on the frontend. Database is [PostgreSQL]("https://www.postgresql.org/").
+For automatic reload I used [Air]("https://github.com/cosmtrek/air")
