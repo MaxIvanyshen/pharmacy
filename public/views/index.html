@@ -1,0 +1,97 @@
+
+{{ block "index" . }} 
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Tabletki.ua?</title>
+        <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    
+    <body>
+        {{ template "navbar" . }}
+        <h2 class="h2 text-center">Medicine</h2>
+        <div class="container">
+            {{ template "medsIdSearch" . }}
+            {{ template "medsNameSearch" . }}
+            <br>
+            <div id="table">
+                {{ template "table" . }}
+            </div>
+            <br>
+            {{ template "medsForm" . }}
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
+{{ end }}   
+
+{{block "table" .}}
+    <div class="container"style="width: 100%">
+       <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Expiration Date</th>
+              <th scope="col">Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{ range .Meds }}
+            <tr>
+              <th scope="row">{{ .ID }}</th>
+              <td>{{ .Name }}</td>
+              <td>{{ .Price }}</td>
+              <td>{{ .ExpirationDate }}</td>
+              <td>{{ .Count }}</td>
+            </tr>
+            {{ end }}
+          </tbody>
+        </table> 
+    </div>
+    <button class="btn btn-primary" type="submit" hx-target="#table" hx-delete="/api/meds">Remove expired</button>
+{{end}}
+
+{{ block "medsIdSearch" . }}
+<div class="container">
+    <p>Search medicine by id</p>
+    <form class="form-inline" hx-target="#table" hx-get="/api/meds/id">
+        <input name="id" style="width: 15%" class="form-control mr-sm-2" value="0" type="number" aria-label="Search">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+</div>
+{{ end }}
+
+{{ block "medsNameSearch" . }}
+<div class="container">
+    <p>Search medicine by name</p>
+    <form class="form-inline" hx-target="#table" hx-get="/api/meds/name">
+        <input name="name" style="width: 15%" class="form-control mr-sm-2" value="0" type="text" aria-label="Search">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+</div>
+{{ end }}
+
+{{ block "medsForm" .}}
+    <div style="width: 30%">
+        <h4>Add medicine to storage: </h4>
+        <form hx-post="/api/meds" hx-target="#table" method="POST">
+            <label for="name">Name</label>
+            <input type="text" id="name" class="form-control" placeholder="Name" name="name" required>
+            <label for="price">Price</label>
+            <input type="number" class="form-control" id="price" name="price" required>
+            <label for="expDate">ExpirationDate</label>
+            <input type="date"class="form-control" id="expDate" name="expirationDate" required>
+            <label for="Count">Count</label>
+            <input type="number"class="form-control" name="count" required>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+{{ end }}
