@@ -3,7 +3,6 @@ package db
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"log"
 	"pharmacy_system/entities"
 	"pharmacy_system/order"
@@ -128,7 +127,6 @@ func (repo *MedsRepo) Save(med entities.Medicine) error {
         med.ExpirationDate, 
         med.Count,
     )
-    fmt.Println(med)
     return err
 }
 
