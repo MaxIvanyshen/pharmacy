@@ -241,8 +241,6 @@ func (repo *OrderRepo) Save(order order.Order) error {
             if meds.Name == orderItem.Name && meds.ExpirationDate == orderItem.ExpirationDate && meds.Price == orderItem.Price {
                 if meds.Count >= orderItem.Count {
                     count := orderItem.Count
-                    orderItem.Count *= (-1)
-                    medsRepo.Save(orderItem)
                     _, err = db.Query("INSERT INTO meds_in_order(order_id, meds_id, meds_count) VALUES($1, $2, $3)", order.ID, meds.ID, count)
                     if err != nil {
                             return errors.New("couldnt save orders meds")

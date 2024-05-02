@@ -120,8 +120,8 @@
 {{ block "medsNameSearchInOrder" . }}
 <div class="container">
     <p>Search medicine by name</p>
-    <form class="form-inline" hx-target="body" hx-get="/api/orders/meds/name">
-        <input name="name" style="width: 15%" class="form-control mr-sm-2" value="0" type="text" aria-label="Search">
+    <form class="form-inline" hx-target="#table" hx-get="/api/orders/meds/name">
+        <input name="name" style="width: 15%" class="form-control mr-sm-2" value="" type="text" aria-label="Search">
         <button class="btn btn-primary" type="submit">Search</button>
     </form>
 </div>

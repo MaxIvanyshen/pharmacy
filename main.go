@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"html/template"
 	"io"
 	"net/http"
@@ -146,7 +145,7 @@ func getMedicineByNameInOrder(c echo.Context) error {
     if err != nil {
         c.Error(err)
     }
-    return c.Render(http.StatusOK, "new_order", dto.NewOrderData{Meds: items, Order: currentOrder})
+    return c.Render(http.StatusOK, "table", dto.NewOrderData{Meds: items, Order: currentOrder})
 }
 
 func addItemToOrder(c echo.Context) error {
@@ -159,7 +158,6 @@ func addItemToOrder(c echo.Context) error {
     if err != nil {
         c.Error(err)
     }
-    fmt.Println(item)
 
     item.Count = -1
     medsRepo.Save(item)
